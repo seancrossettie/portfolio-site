@@ -1,17 +1,35 @@
+import { ChakraProvider, useColorMode } from '@chakra-ui/react';
+import { Global, css } from '@emotion/react';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import './index.css';
+import customTheme from './styles/theme';
+
+const GlobalStyle = ({ children }) => {
+  const { colorMode } = useColorMode();
+  <>
+    <Global 
+      styles={css`
+        html {
+          min-width: 356px;
+          scroll-behavior: smooth;
+        }
+        #root {
+          display: flex;
+          flex-direction: column;
+          min-height: 100vh;
+          background: ${colorMode === 'light' ? 'white' : '#171717'};
+        }
+      `}
+    />
+    {children}
+  </>
+}
 
 ReactDOM.render(
-  <React.StrictMode>
+  <ChakraProvider resetCSS theme={customTheme}>
     <App />
-  </React.StrictMode>,
+  </ChakraProvider>,
   document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
