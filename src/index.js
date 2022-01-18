@@ -1,35 +1,47 @@
 import { ChakraProvider, useColorMode } from '@chakra-ui/react';
-import { Global, css } from '@emotion/react';
+import { css, Global } from '@emotion/react';
+import '@fontsource/inter';
+import firebase from 'firebase/compat/app';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import './index.css';
+import firebaseConfig from './helpers/apiKeys';
 import customTheme from './styles/theme';
 
+// Sets Global Styles for the Document 
 const GlobalStyle = ({ children }) => {
+// useColorMode() is a hook that toggles between 'light' and 'dark'
   const { colorMode } = useColorMode();
-  <>
-    <Global 
-      styles={css`
-        html {
-          min-width: 356px;
-          scroll-behavior: smooth;
-        }
-        #root {
-          display: flex;
-          flex-direction: column;
-          min-height: 100vh;
-          background: ${colorMode === 'light' ? 'white' : '#171717'};
-        }
-      `}
-    />
-    {children}
-  </>
+  return (
+    <>
+      <Global 
+        styles={css`
+          html {
+            min-width: 356px;
+            scroll-behavior: smooth;
+          }
+
+          #root {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: ${colorMode === 'light' ? 'white' : '#171717'};
+          }
+        `}
+      />
+      {children}
+    </>
+  )
 }
+
+// Initializes a firebase connection
+firebase.initializeApp(firebaseConfig);
 
 ReactDOM.render(
   <ChakraProvider resetCSS theme={customTheme}>
-    <App />
+    <GlobalStyle>
+      <App />
+    </GlobalStyle>
   </ChakraProvider>,
   document.getElementById('root')
 );
