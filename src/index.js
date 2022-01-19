@@ -4,6 +4,7 @@ import '@fontsource/inter';
 import firebase from 'firebase/compat/app';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import firebaseConfig from './helpers/apiKeys';
 import customTheme from './styles/theme';
@@ -40,7 +41,9 @@ firebase.initializeApp(firebaseConfig);
 ReactDOM.render(
   <ChakraProvider resetCSS theme={customTheme}>
     <GlobalStyle>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </GlobalStyle>
   </ChakraProvider>,
   document.getElementById('root')
