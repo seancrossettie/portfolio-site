@@ -2,11 +2,13 @@ import { ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons';
 import { Box, Button, Flex, IconButton, useColorMode } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { signInUser, signOutUser } from '../../helpers/auth';
 import DarkModeSwitch from './DarkModeSwitch';
 
 const Container = ({ children, user }) => {
   const { colorMode } = useColorMode();
+  const navigate = useNavigate();
 
   const bgColor = {
     light: 'white',
@@ -25,8 +27,6 @@ const Container = ({ children, user }) => {
     backdrop-filter: saturate(180%) blur(20%);
     transition: height .5s, line-height .5s;
   `;
-
-
 
   return (
     <>
@@ -47,10 +47,10 @@ const Container = ({ children, user }) => {
       >
         <Box>
           <DarkModeSwitch />
-          <Button fontWeight={'light'} mx={[0, 0, 2]} variant={'ghost'}>Home</Button>
-          <Button fontWeight={'light'} mx={[0, 0, 2]} variant={'ghost'}>Blog</Button>
-          <Button fontWeight={'light'} mx={[0, 0, 2]} variant={'ghost'}>Portfolio</Button>
-          <Button fontWeight={'light'} mx={[0, 0, 2]} variant={'ghost'}>About</Button>
+          <Button fontWeight={'light'} mx={[0, 0, 2]} variant={'ghost'} onClick={() => navigate('/')}>Home</Button>
+          <Button fontWeight={'light'} mx={[0, 0, 2]} variant={'ghost'} onClick={() => navigate('/blog')}>Blog</Button>
+          <Button fontWeight={'light'} mx={[0, 0, 2]} variant={'ghost'} onClick={() => navigate('/portfolio')}>Portfolio</Button>
+          <Button fontWeight={'light'} mx={[0, 0, 2]} variant={'ghost'} onClick={() => navigate('/about')}>About</Button>
           {user
             ? <IconButton mx={[0, 0, 2]} icon={<ArrowLeftIcon />} variant={'ghost'} onClick={() => signOutUser()} />
             : <IconButton mx={[0, 0, 2]} icon={<ArrowRightIcon />} variant={'ghost'} onClick={() => signInUser()} />
